@@ -1,6 +1,7 @@
 package com.bbeltranl.evaluation.dto;
 
 import com.bbeltranl.evaluation.model.Phone;
+import com.bbeltranl.evaluation.validator.ValidPassword;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -41,8 +42,8 @@ public class UserRequest {
     /**
      * The password of the user.
      */
-    @NotBlank(message = "Password requerida")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$", message = "La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un dígito y un carácter especial")
+    @NotBlank(message = "La contraseña es requerida")
+    @ValidPassword
     private String password;
 
     /**
