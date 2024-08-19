@@ -75,6 +75,62 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * Retrieves a user based on the provided unique identifier (UUID).
+     *
+     * @param id The unique identifier of the user to retrieve.
+     * @return The {@link User} object if found.
+     */
+    @Override
+    public User getUserById(UUID id) {
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isEmpty()) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        } else {
+            return userOpt.get();
+        }
+    }
+
+    /**
+     * Deletes a user based on the provided unique identifier (UUID).
+     *
+     * @param id The unique identifier of the user to be deleted.
+     */
+    @Override
+    public void deleteUserById(UUID id) {
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isEmpty()) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        } else {
+            userRepository.deleteById(id);
+        }
+    }
+
+    /**
+     * Updates a user's information based on the provided unique identifier (UUID) and the request data.
+     *
+     * @param id The unique identifier of the user to be updated.
+     * @param userRequest The request object containing the fields to update in the user.
+     * @return The updated {@link User} object after the changes have been saved.
+     */
+    @Override
+    public User updateUser(UUID id, UserRequest userRequest) {
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isEmpty()) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        } else {
+            User user = userOpt.get();
+            user.setId(id);
+            if(userRequest.getName()!=null) user.setName(userRequest.getName());
+            user.setModified(new Date());
+            user.setLastLogin(new Date());
+            if(userRequest.getEmail()!=null) user.setEmail(userRequest.getEmail());
+            if(userRequest.getPassword()!=null) user.setPassword(userRequest.getPassword());
+            if(userRequest.getPhones()!=null) user.setPhones(userRequest.getPhones());
+            return userRepository.save(user);
+        }
+    }
+
+    /**
      * Generates a JWT token based on the provided email.
      *
      * @param email the email for which the token is generated.

@@ -4,6 +4,7 @@ import com.bbeltranl.evaluation.dto.UserRequest;
 import com.bbeltranl.evaluation.model.User;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Service interface for user-related operations.
@@ -33,4 +34,28 @@ public interface UserService {
      * @return a {@link List} of {@link User} entities.
      */
     List<User> listAll();
+
+    /**
+     * Retrieves a user based on the provided unique identifier (UUID).
+     *
+     * @param id The unique identifier of the user to retrieve.
+     * @return The {@link User} object corresponding to the provided ID.
+     */
+    User getUserById(UUID id);
+
+    /**
+     * Deletes a user based on the provided unique identifier (UUID).
+     *
+     * @param id The unique identifier of the user to be deleted.
+     */
+    void deleteUserById(UUID id);
+
+    /**
+     * Updates the user with the specified unique identifier (UUID) using the provided user request data.
+     *
+     * @param id The unique identifier of the user to be updated.
+     * @param userRequest The request object containing the fields to update in the user.
+     * @return The updated {@link User} object after the changes have been applied.
+     */
+    User updateUser(UUID id, UserRequest userRequest);
 }
